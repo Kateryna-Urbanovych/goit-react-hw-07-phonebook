@@ -1,9 +1,9 @@
 import axios from 'axios';
 import shortid from 'shortid';
 import {
-    // fetchContactRequest,
-    // fetchContactSuccess,
-    // fetchContactError,
+    fetchContactRequest,
+    fetchContactSuccess,
+    fetchContactError,
     addContactRequest,
     addContactSuccess,
     addContactError,
@@ -14,14 +14,14 @@ import {
 
 axios.defaults.baseURL = 'http://localhost:5050';
 
-// const fetchContacts = () => dispatch => {
-//     dispatch(fetchContactRequest());
+const fetchContacts = () => dispatch => {
+    dispatch(fetchContactRequest());
 
-//     axios
-//         .get('/contacts')
-//         .then(({ data }) => dispatch(fetchContactSuccess(data)))
-//         .catch(error => dispatch(fetchContactError(error)));
-// };
+    axios
+        .get('/contacts')
+        .then(({ data }) => dispatch(fetchContactSuccess(data)))
+        .catch(error => dispatch(fetchContactError(error)));
+};
 
 const addContact = (name, number) => dispatch => {
     const contact = {
@@ -48,7 +48,7 @@ const deleteContact = contactId => dispatch => {
 };
 
 const contactsOperations = {
-    // fetchContacts,
+    fetchContacts,
     addContact,
     deleteContact,
 };
