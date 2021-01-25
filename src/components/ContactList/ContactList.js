@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import s from './ContactList.module.css';
-import { getVisibleContacts } from '../../redux/contacts/contacts-selectors';
-import contactsOperations from '../../redux/contacts/contacts-operations';
-import ContactItem from '../ContactItem';
+import ContactItem from 'components/ContactItem';
+import { contactsOperations, contactsSelectors } from 'redux/contacts';
 
 const ContactList = () => {
-    const contacts = useSelector(getVisibleContacts);
+    const contacts = useSelector(contactsSelectors.getVisibleContacts);
+    const loading = useSelector(contactsSelectors.getLoading);
     const dispatch = useDispatch();
 
     useEffect(() => dispatch(contactsOperations.fetchContacts()), [dispatch]);
@@ -15,6 +15,9 @@ const ContactList = () => {
         <ul className={s.contactList}>
             {/* отображает отсутствие контаков */}
             {contacts.length === 0 && <p>No contacts</p>}
+
+            {/* отображает загрузку контаков */}
+            {loading && <p>Loading contacts ...</p>}
 
             {contacts.map(({ id, name, number }) => (
                 <li key={id} className={s.contactItem}>

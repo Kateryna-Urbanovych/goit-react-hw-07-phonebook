@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import s from './ContactItem.module.css';
-import contactsOperations from '../../redux/contacts/contacts-operations';
+import { contactsOperations } from 'redux/contacts';
 
 const ContactItem = ({ name, number, id }) => {
     const dispatch = useDispatch();
+
     return (
         <>
             {name}: {number}

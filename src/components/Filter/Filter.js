@@ -1,10 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { changeFilter } from '../../redux/contacts/contacts-actions';
 import s from './Filter.module.css';
-import { getFilter } from '../../redux/contacts/contacts-selectors';
+import { contactsActions, contactsSelectors } from 'redux/contacts';
 
 const Filter = () => {
-    const value = useSelector(getFilter);
+    const value = useSelector(contactsSelectors.getFilter);
     const dispatch = useDispatch();
 
     return (
@@ -14,7 +13,9 @@ const Filter = () => {
                 type="text"
                 className={s.input}
                 value={value}
-                onChange={event => dispatch(changeFilter(event.target.value))}
+                onChange={event =>
+                    dispatch(contactsActions.changeFilter(event.target.value))
+                }
                 autoComplete="off"
             />
         </label>

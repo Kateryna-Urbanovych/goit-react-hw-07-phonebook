@@ -1,14 +1,12 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import s from './ContactForm.module.css';
-// import * as contactsActions from '../../redux/contacts/contacts-actions';
-import contactsOperations from '../../redux/contacts/contacts-operations';
-import { getContacts } from '../../redux/contacts/contacts-selectors';
+import { contactsOperations, contactsSelectors } from 'redux/contacts';
 
 export default function ContactForm() {
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
-    const contacts = useSelector(getContacts);
+    const contactsNames = useSelector(contactsSelectors.getContactsNames);
     const dispatch = useDispatch();
 
     const handleChange = ({ target }) => {
@@ -31,7 +29,6 @@ export default function ContactForm() {
     const handleSubmit = event => {
         event.preventDefault();
 
-        const contactsNames = getContactsNames();
         if (contactsNames.includes(name.toLowerCase())) {
             alert(`${name} is already in contacts`);
             return;
@@ -54,13 +51,6 @@ export default function ContactForm() {
     const reset = () => {
         setName('');
         setNumber('');
-    };
-
-    const getContactsNames = () => {
-        return contacts.reduce((allNames, { name }) => {
-            allNames.push(name.toLowerCase());
-            return allNames;
-        }, []);
     };
 
     return (
