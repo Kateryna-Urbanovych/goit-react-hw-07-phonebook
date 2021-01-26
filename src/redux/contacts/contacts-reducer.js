@@ -1,22 +1,14 @@
 import { combineReducers } from 'redux';
 import { createReducer } from '@reduxjs/toolkit';
-import {
-    fetchContactRequest,
-    fetchContactSuccess,
-    fetchContactError,
-    addContactRequest,
-    addContactSuccess,
-    addContactError,
-    deleteContactRequest,
-    deleteContactSuccess,
-    deleteContactError,
-    changeFilter,
-} from './contacts-actions';
+import { changeFilter } from './contacts-actions';
+import contactsOperations from './contacts-operations';
+
+const { fetchContacts, addContact, deleteContact } = contactsOperations;
 
 const itemsReducer = createReducer([], {
-    [fetchContactSuccess]: (_, { payload }) => payload,
-    [addContactSuccess]: (state, { payload }) => [payload, ...state],
-    [deleteContactSuccess]: (state, { payload }) =>
+    [fetchContacts.fulfilled]: (_, { payload }) => payload,
+    [addContact.fulfilled]: (state, { payload }) => [payload.data, ...state],
+    [deleteContact.fulfilled]: (state, { payload }) =>
         state.filter(({ id }) => id !== payload),
 });
 
@@ -25,15 +17,15 @@ const filterReducer = createReducer('', {
 });
 
 const loadingReducer = createReducer(false, {
-    [fetchContactRequest]: () => true,
-    [fetchContactSuccess]: () => false,
-    [fetchContactError]: () => false,
-    [addContactRequest]: () => true,
-    [addContactSuccess]: () => false,
-    [addContactError]: () => false,
-    [deleteContactRequest]: () => true,
-    [deleteContactSuccess]: () => false,
-    [deleteContactError]: () => false,
+    [fetchContacts.pending]: () => true,
+    [fetchContacts.fulfilled]: () => false,
+    [fetchContacts.rejected]: () => false,
+    [addContact.pending]: () => true,
+    [addContact.fulfilled]: () => false,
+    [addContact.rejected]: () => false,
+    [deleteContact.pending]: () => true,
+    [deleteContact.fulfilled]: () => false,
+    [deleteContact.rejected]: () => false,
 });
 
 // можна обрабатывать ошибку и показывать что-то в интерфейсе, типа error.message

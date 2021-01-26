@@ -9,7 +9,9 @@ const ContactList = () => {
     const loading = useSelector(contactsSelectors.getLoading);
     const dispatch = useDispatch();
 
-    useEffect(() => dispatch(contactsOperations.fetchContacts()), [dispatch]);
+    useEffect(() => {
+        dispatch(contactsOperations.fetchContacts());
+    }, [dispatch]);
 
     return (
         <ul className={s.contactList}>
