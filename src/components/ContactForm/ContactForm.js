@@ -43,8 +43,8 @@ export default function ContactForm() {
         //     alert(`${name} is already in contacts`);
         //     return;
         // }
-
-        dispatch(contactsOperations.addContact({ name, number }));
+        const contact = { name, number };
+        dispatch(contactsOperations.addContact(contact));
         reset();
     };
 

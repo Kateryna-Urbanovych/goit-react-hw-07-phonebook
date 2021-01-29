@@ -7,7 +7,7 @@ const { fetchContacts, addContact, deleteContact } = contactsOperations;
 
 const itemsReducer = createReducer([], {
     [fetchContacts.fulfilled]: (_, { payload }) => payload,
-    [addContact.fulfilled]: (state, { payload }) => [payload.data, ...state],
+    [addContact.fulfilled]: (state, { payload }) => [payload, ...state],
     [deleteContact.fulfilled]: (state, { payload }) =>
         state.filter(({ id }) => id !== payload),
 });
